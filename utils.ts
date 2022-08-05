@@ -12,6 +12,8 @@ import {
 import addDays from 'https://deno.land/x/date_fns@v2.22.1/addDays/index.ts';
 import { getUserDoc } from './firebase.ts';
 import { Log, LogType, User } from './types.ts';
+import compareAsc from 'https://deno.land/x/date_fns@v2.22.1/compareAsc/index.ts';
+import differenceInSeconds from 'https://deno.land/x/date_fns@v2.22.1/differenceInSeconds/index.ts';
 
 // ログを取得する
 export const fetchLogs = async (uid: string, time: Date) => {
@@ -49,7 +51,7 @@ export const recordLog = async (uid: string, type: LogType, time: Date) => {
   console.log(lastLog);
 
   if (lastLog?.type === type) {
-    return true;
+    throw new Error('すでに登録済みです');
   }
 
   // 勤務ログ追加
@@ -65,6 +67,58 @@ export const recordLog = async (uid: string, type: LogType, time: Date) => {
     updatedAt: Timestamp.fromDate(time),
   };
   await setDoc(userDoc, user, { merge: true });
+};
 
-  return false;
+// 勤務時間・休憩時間を算出する
+export const calculate = (logs: Log[]) => {
+  const ascLogs = logs.sort((a, b) =>
+    compareAsc(a.createdAt.toDate(), b.createdAt.toDate())
+  );
+
+  const time: { [key in 'work' | 'rest']: number } = {
+    'work': 0,
+    'rest': 0,
+  };
+  const stack: { [key in 'work' | 'rest']: Log | null } = {
+    'work': null,
+    'rest': null,
+  };
+
+  for (let i = 0; i < ascLogs.length; i++) {
+    const log = ascLogs[i];
+
+    if (stack['work'] === null) {
+      if (log.type === 'syussya') {
+        stack['work'] = log;
+      }
+    }
+
+    if (stack['work']?.type === 'syussya') {
+      if (log.type === 'taisya') {
+        const start = stack['work'].createdAt.toDate();
+        const end = log.createdAt.toDate();
+        const diff = Math.abs(differenceInSeconds(start, end));
+        time['work'] += diff;
+        stack['work'] = null;
+      }
+    }
+
+    if (stack['rest'] === null) {
+      if (log.type === 'kyukei') {
+        stack['rest'] = log;
+      }
+    }
+
+    if (stack['rest']?.type === 'kyukei') {
+      if (log.type === 'saikai') {
+        const start = stack['rest'].createdAt.toDate();
+        const end = log.createdAt.toDate();
+        const diff = Math.abs(differenceInSeconds(start, end));
+        time['rest'] += diff;
+        stack['rest'] = null;
+      }
+    }
+  }
+
+  return time;
 };

@@ -7,7 +7,7 @@ import {
   SLACK_SIGNING_SECRET,
 } from './env.ts';
 import { LogType } from './types.ts';
-import { fetchLogs, recordLog } from './utils.ts';
+import { calculate, fetchLogs, recordLog } from './utils.ts';
 
 const app = new App({
   signingSecret: SLACK_SIGNING_SECRET,
@@ -17,14 +17,25 @@ const app = new App({
   ignoreSelf: true,
 });
 
-const ERROR_MESSAGE = 'エラーが発生しました。。もう一度やり直してください！🙇';
+const ERROR_MESSAGE = 'エラーが発生しました:gopher-bom:';
 
-app.message(RegExp(/^(hello).*/), async ({ event }) => {
+app.message(RegExp(/^(workman-time).*/), async ({ event, say }) => {
   const uid = (event as any).user as string;
   const now = new Date();
+  const nowstr = format(now, 'yyyy-MM-dd', {
+    timeZone: 'Asia/Tokyo',
+  });
 
   const logs = await fetchLogs(uid, now);
-  console.log(logs);
+  const time = calculate(logs);
+
+  if (time.work > 0) {
+    await say(
+      `${nowstr}の勤怠です:awesome-gopher:\n- 稼働時間: ${time.work}[s]\n- 休憩時間: ${time.rest}[s]`,
+    );
+  } else {
+    await say(`${nowstr}の勤怠はありません:gopher-bom:`);
+  }
 });
 
 // 出社
@@ -39,19 +50,13 @@ app.message(
     });
 
     try {
-      const isError = await recordLog(uid, type, now);
-
-      if (isError) {
-        await say({ text: 'すでに出社済みです', thread_ts: event.ts } as any);
-        return;
-      } else {
-        await say(
-          {
-            text: `打刻しました！${nowstr}`,
-            thread_ts: event.ts,
-          } as any,
-        );
-      }
+      await recordLog(uid, type, now);
+      await say(
+        {
+          text: `打刻しました！${nowstr}`,
+          thread_ts: event.ts,
+        } as any,
+      );
     } catch {
       await say({ text: ERROR_MESSAGE, thread_ts: event.ts } as any);
     }
@@ -70,19 +75,13 @@ app.message(
     });
 
     try {
-      const isError = await recordLog(uid, type, now);
-
-      if (isError) {
-        await say({ text: 'すでに退社済みです', thread_ts: event.ts } as any);
-        return;
-      } else {
-        await say(
-          {
-            text: `お疲れ様でした！${nowstr}`,
-            thread_ts: event.ts,
-          } as any,
-        );
-      }
+      await recordLog(uid, type, now);
+      await say(
+        {
+          text: `お疲れ様でした！${nowstr}`,
+          thread_ts: event.ts,
+        } as any,
+      );
     } catch {
       await say({ text: ERROR_MESSAGE, thread_ts: event.ts } as any);
     }
@@ -101,19 +100,13 @@ app.message(
     });
 
     try {
-      const isError = await recordLog(uid, type, now);
-
-      if (isError) {
-        await say({ text: 'すでに休憩済みです', thread_ts: event.ts } as any);
-        return;
-      } else {
-        await say(
-          {
-            text: `ゆっくり休みましょう！${nowstr}`,
-            thread_ts: event.ts,
-          } as any,
-        );
-      }
+      await recordLog(uid, type, now);
+      await say(
+        {
+          text: `ちゃんと休みましょう！${nowstr}`,
+          thread_ts: event.ts,
+        } as any,
+      );
     } catch {
       await say({ text: ERROR_MESSAGE, thread_ts: event.ts } as any);
     }
@@ -132,19 +125,13 @@ app.message(
     });
 
     try {
-      const isError = await recordLog(uid, type, now);
-
-      if (isError) {
-        await say({ text: 'すでに再開済みです', thread_ts: event.ts } as any);
-        return;
-      } else {
-        await say(
-          {
-            text: `引き続きがんばりましょう！${nowstr}`,
-            thread_ts: event.ts,
-          } as any,
-        );
-      }
+      await recordLog(uid, type, now);
+      await say(
+        {
+          text: `引き続きがんばりましょう！${nowstr}`,
+          thread_ts: event.ts,
+        } as any,
+      );
     } catch {
       await say({ text: ERROR_MESSAGE, thread_ts: event.ts } as any);
     }
