@@ -1,8 +1,8 @@
-## workman bot
+# workman bot
 
 勤怠記録slack bot
 
-## heroku設定
+### heroku設定
 
 ```sh
 # TZ変更
