@@ -117,7 +117,7 @@ app.message(
       await recordLog(uid, type, now);
       await say(
         {
-          text: `:coffee:${nowstr}`,
+          text: `:coffee: ${nowstr}`,
           thread_ts: event.ts,
         } as any,
       );
