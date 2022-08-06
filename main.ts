@@ -2,12 +2,15 @@ import 'https://deno.land/x/dotenv@v2.0.0/load.ts';
 import { App } from 'https://deno.land/x/slack_bolt@1.0.0/mod.ts';
 import format from 'https://deno.land/x/date_fns@v2.22.1/format/index.js';
 import {
+  PORT,
   SLACK_APP_TOKEN,
   SLACK_BOT_TOKEN,
   SLACK_SIGNING_SECRET,
 } from './env.ts';
 import { LogType } from './types.ts';
 import { calculate, fetchLogs, recordLog, seconds2timelabel } from './utils.ts';
+
+console.log(PORT);
 
 const app = new App({
   signingSecret: SLACK_SIGNING_SECRET,
