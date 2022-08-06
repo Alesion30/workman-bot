@@ -114,7 +114,7 @@ app.message(
       await recordLog(uid, type, now);
       await say(
         {
-          text: `ちゃんと休みましょう！${nowstr}`,
+          text: `:coffee:${nowstr}`,
           thread_ts: event.ts,
         } as any,
       );
@@ -139,7 +139,7 @@ app.message(
       await recordLog(uid, type, now);
       await say(
         {
-          text: `引き続きがんばりましょう！${nowstr}`,
+          text: `引き続き頑張ってください！${nowstr}`,
           thread_ts: event.ts,
         } as any,
       );

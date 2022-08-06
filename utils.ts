@@ -48,8 +48,6 @@ export const recordLog = async (uid: string, type: LogType, time: Date) => {
 
   // 最新のログ
   const lastLog: Log | null = logs.length > 0 ? logs[logs.length - 1] : null;
-  console.log(lastLog);
-
   if (lastLog?.type === type) {
     throw new Error('すでに登録済みです');
   }
@@ -123,7 +121,10 @@ export const calculate = (logs: Log[]) => {
     }
   }
 
-  return time;
+  return {
+    'work': time.work - time.rest,
+    'rest': time.rest,
+  };
 };
 
 export const seconds2timelabel = (seconds: number) => {
