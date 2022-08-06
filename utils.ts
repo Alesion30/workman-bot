@@ -125,3 +125,9 @@ export const calculate = (logs: Log[]) => {
 
   return time;
 };
+
+export const seconds2timelabel = (seconds: number) => {
+  const hour = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds - hour * 3600) / 60);
+  return `${hour}時間${minutes}分`;
+};

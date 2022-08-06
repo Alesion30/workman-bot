@@ -7,7 +7,7 @@ import {
   SLACK_SIGNING_SECRET,
 } from './env.ts';
 import { LogType } from './types.ts';
-import { calculate, fetchLogs, recordLog } from './utils.ts';
+import { calculate, fetchLogs, recordLog, seconds2timelabel } from './utils.ts';
 
 const app = new App({
   signingSecret: SLACK_SIGNING_SECRET,
@@ -31,7 +31,11 @@ app.message(RegExp(/^(workman-time).*/), async ({ event, say }) => {
 
   if (time.work > 0) {
     await say(
-      `${nowstr}の勤怠です:awesome-gopher:\n- 稼働時間: ${time.work}[s]\n- 休憩時間: ${time.rest}[s]`,
+      [
+        `${nowstr}の勤怠です:awesome-gopher:`,
+        `- 稼働時間: ${seconds2timelabel(time.work)}`,
+        `- 休憩時間: ${seconds2timelabel(time.rest)}`,
+      ].join('\n'),
     );
   } else {
     await say(`${nowstr}の勤怠はありません:gopher-bom:`);
@@ -74,11 +78,18 @@ app.message(
       timeZone: 'Asia/Tokyo',
     });
 
+    const logs = await fetchLogs(uid, now);
+    const time = calculate(logs);
+
     try {
       await recordLog(uid, type, now);
       await say(
         {
-          text: `お疲れ様でした！${nowstr}`,
+          text: [
+            `お疲れ様でした！${nowstr}`,
+            `- 稼働時間: ${seconds2timelabel(time.work)}`,
+            `- 休憩時間: ${seconds2timelabel(time.rest)}`,
+          ].join('\n'),
           thread_ts: event.ts,
         } as any,
       );
