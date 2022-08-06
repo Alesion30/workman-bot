@@ -75,6 +75,7 @@ export const calculate = (logs: Log[]) => {
     compareAsc(a.createdAt.toDate(), b.createdAt.toDate())
   );
 
+  let isWork = false;
   const time: { [key in 'work' | 'rest']: number } = {
     'work': 0,
     'rest': 0,
@@ -90,6 +91,7 @@ export const calculate = (logs: Log[]) => {
     if (stack['work'] === null) {
       if (log.type === 'syussya') {
         stack['work'] = log;
+        isWork = true;
       }
     }
 
@@ -100,11 +102,12 @@ export const calculate = (logs: Log[]) => {
         const diff = Math.abs(differenceInSeconds(start, end));
         time['work'] += diff;
         stack['work'] = null;
+        isWork = false;
       }
     }
 
     if (stack['rest'] === null) {
-      if (log.type === 'kyukei') {
+      if (isWork && log.type === 'kyukei') {
         stack['rest'] = log;
       }
     }
