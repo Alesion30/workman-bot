@@ -20,6 +20,31 @@ const app = new App({
 
 const ERROR_MESSAGE = 'エラーが発生しました:gopher-bom:';
 
+app.command('/time', async ({ command, ack, say }) => {
+  await ack();
+
+  const uid = command.user_id;
+  const now = new Date();
+  const nowstr = format(now, 'yyyy-MM-dd', {
+    timeZone: 'Asia/Tokyo',
+  });
+
+  const logs = await fetchLogs(uid, now);
+  const time = calculate(logs);
+
+  if (time.work > 0) {
+    await say(
+      [
+        `${nowstr}の勤怠です:awesome-gopher:`,
+        `- 稼働時間: ${seconds2timelabel(time.work)}`,
+        `- 休憩時間: ${seconds2timelabel(time.rest)}`,
+      ].join('\n'),
+    );
+  } else {
+    await say(`${nowstr}の勤怠はありません:gopher-bom:`);
+  }
+});
+
 app.message(RegExp(/^(workman-time).*/), async ({ event, say }) => {
   const uid = (event as any).user as string;
   const now = new Date();
