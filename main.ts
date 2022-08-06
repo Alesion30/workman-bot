@@ -20,7 +20,7 @@ const app = new App({
 
 const ERROR_MESSAGE = 'エラーが発生しました:gopher-bom:';
 
-app.command('/time', async ({ command, ack, say }) => {
+app.command('/today-record', async ({ command, ack, say }) => {
   await ack();
 
   const uid = command.user_id;
@@ -45,7 +45,7 @@ app.command('/time', async ({ command, ack, say }) => {
   }
 });
 
-app.message(RegExp(/^(workman-time).*/), async ({ event, say }) => {
+app.message(RegExp(/^(today-record).*/), async ({ event, say }) => {
   const uid = (event as any).user as string;
   const now = new Date();
   const nowstr = format(now, 'yyyy-MM-dd', {
