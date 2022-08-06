@@ -9,3 +9,7 @@ fmt:
 .PHONY: lint
 lint:
 	deno lint -c deno.json
+
+.PHONY: set-buildpack
+set-buildpack:
+	heroku buildpacks:set https://github.com/chibat/heroku-buildpack-deno.git
