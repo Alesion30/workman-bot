@@ -10,6 +10,10 @@ fmt:
 lint:
 	deno lint -c deno.json
 
+.PHONY: heroku-scale
+heroku-scale:
+	heroku ps:scale websocket=1
+
 .PHONY: set-buildpack
 set-buildpack:
 	heroku buildpacks:set https://github.com/chibat/heroku-buildpack-deno.git
