@@ -121,10 +121,17 @@ export const calculate = (logs: Log[]) => {
     }
   }
 
-  return {
-    'work': time.work - time.rest,
-    'rest': time.rest,
-  };
+  if (time.work > 0) {
+    return {
+      'work': time.work - time.rest,
+      'rest': time.rest,
+    };
+  } else {
+    return {
+      'work': 0,
+      'rest': 0,
+    };
+  }
 };
 
 export const seconds2timelabel = (seconds: number) => {
