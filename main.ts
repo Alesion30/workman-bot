@@ -10,8 +10,6 @@ import {
 import { LogType } from './types.ts';
 import { calculate, fetchLogs, recordLog, seconds2timelabel } from './utils.ts';
 
-console.log(PORT);
-
 const app = new App({
   signingSecret: SLACK_SIGNING_SECRET,
   token: SLACK_BOT_TOKEN,
@@ -81,11 +79,11 @@ app.message(
       timeZone: 'Asia/Tokyo',
     });
 
-    const logs = await fetchLogs(uid, now);
-    const time = calculate(logs);
-
     try {
       await recordLog(uid, type, now);
+
+      const logs = await fetchLogs(uid, now);
+      const time = calculate(logs);
       await say(
         {
           text: [
@@ -152,5 +150,5 @@ app.message(
   },
 );
 
-await app.start({ port: 3000 });
+await app.start({ port: PORT });
 console.log('🦕 ⚡️');
