@@ -70,7 +70,7 @@ app.message(RegExp(/^(today-record).*/), async ({ event, say }) => {
 
 // 出社
 app.message(
-  RegExp(/^(:ronri_syussya:|:buturi_syussya:).*/),
+  RegExp(/^(:ronri_syussya:|:syussya:).*/),
   async ({ event, say }) => {
     const type: LogType = 'syussya';
     const uid = (event as any).user as string;
@@ -95,7 +95,7 @@ app.message(
 
 // 退社
 app.message(
-  RegExp(/^(:ronri_taisya:|:buturi_taisya:).*/),
+  RegExp(/^(:ronri_taisya:|:taisya:).*/),
   async ({ event, say }) => {
     const type: LogType = 'taisya';
     const uid = (event as any).user as string;
@@ -127,7 +127,7 @@ app.message(
 
 // 休憩
 app.message(
-  RegExp(/^(:ronri_kyukei:|:buturi_kyukei:).*/),
+  RegExp(/^(:ronri_kyukei:|:kyukei:).*/),
   async ({ event, say }) => {
     const type: LogType = 'kyukei';
     const uid = (event as any).user as string;
@@ -152,7 +152,7 @@ app.message(
 
 // 再開
 app.message(
-  RegExp(/^(:ronri_saikai:|:buturi_saikai:).*/),
+  RegExp(/^(:ronri_saikai:|:saikai:).*/),
   async ({ event, say }) => {
     const type: LogType = 'saikai';
     const uid = (event as any).user as string;
