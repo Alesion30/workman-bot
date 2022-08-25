@@ -1,4 +1,4 @@
-import { Timestamp } from 'https://cdn.skypack.dev/firebase@9/firestore';
+import { Timestamp } from 'https://cdn.skypack.dev/firebase@9.9.2/firestore';
 
 export type User = {
   uid: string;

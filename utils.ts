@@ -8,7 +8,7 @@ import {
   setDoc,
   startAt,
   Timestamp,
-} from 'https://cdn.skypack.dev/firebase@9/firestore';
+} from 'https://cdn.skypack.dev/firebase@9.9.2/firestore';
 import addDays from 'https://deno.land/x/date_fns@v2.22.1/addDays/index.ts';
 import { getUserDoc } from './firebase.ts';
 import { Log, LogType, User } from './types.ts';

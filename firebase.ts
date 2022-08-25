@@ -1,9 +1,9 @@
-import { initializeApp } from 'https://cdn.skypack.dev/firebase@9/app';
+import { initializeApp } from 'https://cdn.skypack.dev/firebase@9.9.2/app';
 import {
   collection,
   doc,
   getFirestore,
-} from 'https://cdn.skypack.dev/firebase@9/firestore';
+} from 'https://cdn.skypack.dev/firebase@9.9.2/firestore';
 import {
   FIREBASE_API_KEY,
   FIREBASE_APP_ID,
