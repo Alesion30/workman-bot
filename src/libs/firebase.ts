@@ -7,7 +7,7 @@ import {
   FIREBASE_MESSAGING_SENDER_ID,
   FIREBASE_PROJECT_ID,
   FIREBASE_STORAGE_BUCKET,
-} from './env.ts';
+} from '../constants/env.ts';
 
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,

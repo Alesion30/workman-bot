@@ -6,9 +6,14 @@ import {
   SLACK_APP_TOKEN,
   SLACK_BOT_TOKEN,
   SLACK_SIGNING_SECRET,
-} from './env.ts';
-import { LogType } from './types.ts';
-import { calculate, fetchLogs, recordLog, seconds2timelabel } from './utils.ts';
+} from './constants/env.ts';
+import { LogType } from './types/index.ts';
+import {
+  calculate,
+  fetchLogs,
+  recordLog,
+  seconds2timelabel,
+} from './utils/index.ts';
 
 const app = new App({
   signingSecret: SLACK_SIGNING_SECRET,
