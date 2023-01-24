@@ -12,9 +12,6 @@ import {
   // } from 'npm:firebase@9.9.2/firestore'; // NOTE: Deno Deployがnpm moduleに対応していない
 } from 'https://cdn.skypack.dev/firebase@9.9.2/firestore';
 import { userDocumentConverter } from '../models/user.ts';
-import startOfDay from 'https://deno.land/x/date_fns@v2.22.1/startOfDay/index.ts';
-import endOfDay from 'https://deno.land/x/date_fns@v2.22.1/endOfDay/index.ts';
-import { validatePostLog } from '../utils/validate_post_log.ts';
 
 const userCol = () =>
   collection(db, 'users').withConverter(userDocumentConverter());
