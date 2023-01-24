@@ -4,6 +4,14 @@
   "deno.unstable": true,
   "deno.config": "./deno.json",
   "editor.formatOnSave": true,
+  "deno.inlayHints.parameterNames.enabled": "none",
+  "deno.inlayHints.enumMemberValues.enabled": false,
+  "deno.inlayHints.functionLikeReturnTypes.enabled": false,
+  "deno.inlayHints.parameterNames.suppressWhenArgumentMatchesName": false,
+  "deno.inlayHints.parameterTypes.enabled": false,
+  "deno.inlayHints.propertyDeclarationTypes.enabled": false,
+  "deno.inlayHints.variableTypes.enabled": false,
+  "deno.inlayHints.variableTypes.suppressWhenTypeMatchesName": false,
   "[json]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
   },
