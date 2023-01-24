@@ -1,10 +1,7 @@
 import { assertEquals } from 'https://deno.land/std@0.173.0/testing/asserts.ts';
 import { LogDocument } from '../../models/log.ts';
 import { AggregateLog, aggregateLog, splitByDay } from '../aggregate_log.ts';
-import {
-  endOfDay,
-  // } from 'npm:date-fns@2.29.3'; // NOTE: Deno Deployがnpm moduleに対応していない
-} from 'https://deno.land/x/date_fns@v2.22.1/index.js';
+import endOfDay from 'https://deno.land/x/date_fns@v2.22.1/endOfDay/index.ts';
 
 Deno.test('aggregateLog: logが存在しないとき', () => {
   const mockLogs: LogDocument[] = [];

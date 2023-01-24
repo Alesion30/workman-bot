@@ -1,6 +1,6 @@
 .PHONY: run
 run:
-	deno run --allow-env --allow-read --allow-net main.ts
+	deno run --allow-env --allow-read --allow-net src/main.ts
 
 .PHONY: fmt
 fmt:

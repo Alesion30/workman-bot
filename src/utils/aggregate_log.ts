@@ -1,13 +1,10 @@
 import { LogDocument } from '../models/log.ts';
-import {
-  compareAsc,
-  differenceInDays,
-  differenceInMinutes,
-  endOfDay,
-  format,
-  startOfDay,
-  // } from 'npm:date-fns@2.29.3'; // NOTE: Deno Deployがnpm moduleに対応していない
-} from 'https://deno.land/x/date_fns@v2.22.1/index.js';
+import compareAsc from 'https://deno.land/x/date_fns@v2.22.1/compareAsc/index.ts';
+import differenceInDays from 'https://deno.land/x/date_fns@v2.22.1/differenceInDays/index.ts';
+import differenceInMinutes from 'https://deno.land/x/date_fns@v2.22.1/differenceInMinutes/index.js';
+import endOfDay from 'https://deno.land/x/date_fns@v2.22.1/endOfDay/index.ts';
+import format from 'https://deno.land/x/date_fns@v2.22.1/format/index.js';
+import startOfDay from 'https://deno.land/x/date_fns@v2.22.1/startOfDay/index.ts';
 
 export type AggregateLog = {
   restTime: number;

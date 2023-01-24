@@ -1,10 +1,7 @@
 import 'https://deno.land/x/dotenv@v2.0.0/load.ts';
 import { App } from 'https://deno.land/x/slack_bolt@1.0.0/mod.ts';
-import {
-  endOfDay,
-  startOfDay,
-  // } from 'npm:date-fns@2.29.3'; // NOTE: Deno Deployがnpm moduleに対応していない
-} from 'https://deno.land/x/date_fns@v2.22.1/index.js';
+import startOfDay from 'https://deno.land/x/date_fns@v2.22.1/startOfDay/index.ts';
+import endOfDay from 'https://deno.land/x/date_fns@v2.22.1/endOfDay/index.ts';
 import { userApi } from './api/user.ts';
 import {
   PORT,
