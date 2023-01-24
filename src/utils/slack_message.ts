@@ -35,9 +35,9 @@ export const postTaisyaMessage = (logs: LogDocument[]) => {
 
     return [
       `お疲れ様でした！${nowstr}`,
-      `(${start} ~ ${end}})`,
       `- 稼働時間: ${result.workTime}時間`,
       `- 休憩時間: ${result.restTime}時間`,
+      `（${start} 〜 ${end}の記録）`,
     ].join('\n');
   } else {
     return '勤怠情報がありません';
@@ -52,9 +52,9 @@ export const postTodayRecordMessage = (logs: LogDocument[]) => {
     const end = format(result.end, 'HH:mm:ss');
 
     return [
-      `(${start} ~ ${end}})`,
       `- 稼働時間: ${result.workTime}時間`,
       `- 休憩時間: ${result.restTime}時間`,
+      `（${start} 〜 ${end}の記録）`,
     ].join('\n');
   } else {
     return '勤怠情報がありません';
