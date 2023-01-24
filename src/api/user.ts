@@ -2,15 +2,16 @@ import { db } from '../libs/firebase.ts';
 import { LogDocument, logDocumentConverter, LogType } from '../models/log.ts';
 import { UserDocument } from '../models/user.ts';
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
   query,
   where,
-} from 'npm:firebase@9.9.2/firestore';
+  // } from 'npm:firebase@9.9.2/firestore'; // NOTE: Deno Deployがnpm moduleに対応していない
+} from 'https://cdn.skypack.dev/firebase@9.9.2/firestore';
 import { userDocumentConverter } from '../models/user.ts';
-import { addDoc } from '../../../../../Library/Caches/deno/npm/registry.npmjs.org/@firebase/firestore/3.4.14/dist/index.d.ts';
 
 const userCol = () =>
   collection(db, 'users').withConverter(userDocumentConverter());
@@ -41,12 +42,12 @@ export const userApi = (): UserApi => ({
       ),
     );
     const docs = snaps.docs;
-    const logs = docs.map((doc) => doc.data());
+    const logs = docs.map((doc: any) => doc.data());
     return logs;
   },
   postLog: async (uid, type, date) => {
     const log: LogDocument = {
-      type: 'syussya',
+      type,
       createdAt: date,
     };
     await addDoc(logCol(uid), log);

@@ -1,4 +1,7 @@
-import { Timestamp } from 'npm:firebase@9.9.2/firestore';
+import {
+  Timestamp,
+  // } from 'npm:firebase@9.9.2/firestore'; // NOTE: Deno Deployがnpm moduleに対応していない
+} from 'https://cdn.skypack.dev/firebase@9.9.2/firestore';
 
 export type User = {
   uid: string;

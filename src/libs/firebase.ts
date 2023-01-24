@@ -1,5 +1,13 @@
-import { initializeApp } from 'npm:firebase@9.9.2/app';
-import { collection, doc, getFirestore } from 'npm:firebase@9.9.2/firestore';
+import {
+  initializeApp,
+  // } from 'npm:firebase@9.9.2/app'; // NOTE: Deno Deployがnpm moduleに対応していない
+} from 'https://cdn.skypack.dev/firebase@9.9.2/app';
+import {
+  collection,
+  doc,
+  getFirestore,
+  // } from 'npm:firebase@9.9.2/firestore'; // NOTE: Deno Deployがnpm moduleに対応していない
+} from 'https://cdn.skypack.dev/firebase@9.9.2/firestore';
 import {
   FIREBASE_API_KEY,
   FIREBASE_APP_ID,

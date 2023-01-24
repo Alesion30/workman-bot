@@ -6,7 +6,8 @@ import {
   endOfDay,
   format,
   startOfDay,
-} from 'npm:date-fns@2.29.3';
+  // } from 'npm:date-fns@2.29.3'; // NOTE: Deno Deployがnpm moduleに対応していない
+} from 'https://deno.land/x/date_fns@v2.22.1/index.js';
 
 export type AggregateLog = {
   restTime: number;

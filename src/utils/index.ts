@@ -8,7 +8,8 @@ import {
   setDoc,
   startAt,
   Timestamp,
-} from 'npm:firebase@9.9.2/firestore';
+  // } from 'npm:firebase@9.9.2/firestore'; // NOTE: Deno Deployがnpm moduleに対応していない
+} from 'https://cdn.skypack.dev/firebase@9.9.2/firestore';
 import addDays from 'https://deno.land/x/date_fns@v2.22.1/addDays/index.ts';
 import { getUserDoc } from '../libs/firebase.ts';
 import { Log, LogType, User } from '../types/index.ts';
