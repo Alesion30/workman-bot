@@ -204,6 +204,7 @@
     "https://deno.land/x/date_fns@v2.22.1/differenceInDays/index.ts": "1345ae3e5959a8e01a56187caabe828610599a4932285d5b9ea49df6696974dd",
     "https://deno.land/x/date_fns@v2.22.1/differenceInMilliseconds/index.ts": "255221bcbfb056ace1527ac3574c2cde3362f3b5cdc9911dd96b5e5542af649d",
     "https://deno.land/x/date_fns@v2.22.1/differenceInMinutes/index.js": "e482cab6b17b2b7146b523ab469076d1b54a6b786139b996c269296a8e2acd1e",
+    "https://deno.land/x/date_fns@v2.22.1/differenceInSeconds/index.ts": "f7875237994771ff550c24bcfcc994ae5de8869bd28ad4f00e5f169bfe7b68ba",
     "https://deno.land/x/date_fns@v2.22.1/endOfDay/index.ts": "d382dc8f35f2a097e70cf802302db12efeb9874bde37f0a92d654551dc2e39ac",
     "https://deno.land/x/date_fns@v2.22.1/format/index.js": "37f93629ebf2c7a93d5b6f60e79edf308a634acd63aaabb2b50b69c2026c56be",
     "https://deno.land/x/date_fns@v2.22.1/isValid/index.js": "8d4f51ca9507d906a532ba6c8bb8624a7b600ff4fdcf7b33b74185c997417b93",

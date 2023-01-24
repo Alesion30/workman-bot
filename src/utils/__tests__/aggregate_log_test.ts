@@ -19,8 +19,8 @@ Deno.test('aggregateLog: [正常系] 正しい形式のログが存在すると�
     { type: 'taisya', createdAt: new Date('2023-01-01 17:30:00') },
   ];
   const expected: AggregateLog = {
-    restTime: 1.5,
-    workTime: 6,
+    restTime: 1.5 * 60,
+    workTime: 6 * 60,
     start: new Date('2023-01-01 10:00:00'),
     end: new Date('2023-01-01 17:30:00'),
     logs: mockLogs,
@@ -38,7 +38,7 @@ Deno.test('aggregateLog: [正常系] 1日に出社が複数ある場合', () => 
   ];
   const expected: AggregateLog = {
     restTime: 0,
-    workTime: 4,
+    workTime: 4 * 60,
     start: new Date('2023-01-01 10:00:00'),
     end: new Date('2023-01-01 17:00:00'),
     logs: mockLogs,
@@ -56,7 +56,7 @@ Deno.test('aggregateLog: [正常系] 日を跨ぐとき', () => {
   ];
   const expected: AggregateLog = {
     restTime: 0,
-    workTime: 9,
+    workTime: 9 * 60,
     start: new Date('2023-01-01 10:00:00'),
     end: new Date('2023-01-02 12:00:00'),
     logs: mockLogs,
@@ -71,7 +71,7 @@ Deno.test('aggregateLog: [異常系] 退社時間が存在しないとき', () =
   ];
   const expected: AggregateLog = {
     restTime: 0,
-    workTime: 14,
+    workTime: 14 * 60,
     start: new Date('2023-01-01 10:00:00'),
     end: endOfDay(new Date('2023-01-01 10:00:00')),
     logs: mockLogs,
@@ -87,8 +87,8 @@ Deno.test('aggregateLog: [異常系] 休憩後、再開ログがない場合', (
     { type: 'taisya', createdAt: new Date('2023-01-01 17:00:00') },
   ];
   const expected: AggregateLog = {
-    restTime: 5,
-    workTime: 2,
+    restTime: 5 * 60,
+    workTime: 2 * 60,
     start: new Date('2023-01-01 10:00:00'),
     end: new Date('2023-01-01 17:00:00'),
     logs: mockLogs,
@@ -103,8 +103,8 @@ Deno.test('aggregateLog: [異常系] 休憩後、退社ログがない場合', (
     { type: 'kyukei', createdAt: new Date('2023-01-01 12:00:00') },
   ];
   const expected: AggregateLog = {
-    restTime: 12,
-    workTime: 2,
+    restTime: 12 * 60,
+    workTime: 2 * 60,
     start: new Date('2023-01-01 10:00:00'),
     end: endOfDay(new Date('2023-01-01 10:00:00')),
     logs: mockLogs,

@@ -35,8 +35,8 @@ export const postTaisyaMessage = (logs: LogDocument[]) => {
 
     return [
       `お疲れ様でした！${nowstr}`,
-      `- 稼働時間: ${result.workTime}時間`,
-      `- 休憩時間: ${result.restTime}時間`,
+      `- 稼働時間: ${timeStr(result.workTime)}`,
+      `- 休憩時間: ${timeStr(result.restTime)}`,
       `（${start} 〜 ${end}の記録）`,
     ].join('\n');
   } else {
@@ -52,8 +52,8 @@ export const postTodayRecordMessage = (logs: LogDocument[]) => {
     const end = format(result.end, 'HH:mm:ss');
 
     return [
-      `- 稼働時間: ${result.workTime}時間`,
-      `- 休憩時間: ${result.restTime}時間`,
+      `- 稼働時間: ${timeStr(result.workTime)}`,
+      `- 休憩時間: ${timeStr(result.restTime)}`,
       `（${start} 〜 ${end}の記録）`,
     ].join('\n');
   } else {
@@ -63,3 +63,9 @@ export const postTodayRecordMessage = (logs: LogDocument[]) => {
 
 /// エラーメッセージ
 export const errorMessage = () => 'エラーが発生しました:gopher-bom:';
+
+const timeStr = (time: number) => {
+  const h = Math.round(time / 60);
+  const m = time - h * 60;
+  return `${h}時間${m}分`;
+};

@@ -1,7 +1,7 @@
 import { LogDocument } from '../models/log.ts';
 import compareAsc from 'https://deno.land/x/date_fns@v2.22.1/compareAsc/index.ts';
 import differenceInDays from 'https://deno.land/x/date_fns@v2.22.1/differenceInDays/index.ts';
-import differenceInMinutes from 'https://deno.land/x/date_fns@v2.22.1/differenceInMinutes/index.js';
+import differenceInSeconds from 'https://deno.land/x/date_fns@v2.22.1/differenceInSeconds/index.ts';
 import endOfDay from 'https://deno.land/x/date_fns@v2.22.1/endOfDay/index.ts';
 import format from 'https://deno.land/x/date_fns@v2.22.1/format/index.js';
 import startOfDay from 'https://deno.land/x/date_fns@v2.22.1/startOfDay/index.ts';
@@ -69,14 +69,14 @@ export const aggregateLog = (
     // 休憩
     if (log.type === 'kyukei') {
       _restStart = log.createdAt;
-      workTime += Math.abs(differenceInMinutes(_workStart!, log.createdAt));
+      workTime += Math.abs(differenceInSeconds(_workStart!, log.createdAt));
     }
 
     // 再開
     if (log.type === 'saikai') {
       _workStart = log.createdAt;
       if (_restStart != null) {
-        restTime += Math.abs(differenceInMinutes(_restStart!, log.createdAt));
+        restTime += Math.abs(differenceInSeconds(_restStart!, log.createdAt));
         _restStart = null;
       }
     }
@@ -85,9 +85,9 @@ export const aggregateLog = (
     if (log.type === 'taisya') {
       end = log.createdAt;
       if (_restStart == null) {
-        workTime += Math.abs(differenceInMinutes(_workStart!, log.createdAt));
+        workTime += Math.abs(differenceInSeconds(_workStart!, log.createdAt));
       } else {
-        restTime += Math.abs(differenceInMinutes(_restStart, log.createdAt));
+        restTime += Math.abs(differenceInSeconds(_restStart, log.createdAt));
       }
     }
   }
@@ -97,8 +97,8 @@ export const aggregateLog = (
   }
 
   return {
-    workTime: Math.round(workTime / 6) / 10,
-    restTime: Math.round(restTime / 6) / 10,
+    workTime: Math.round(workTime / 60),
+    restTime: Math.round(restTime / 60),
     start: start,
     end: end!,
     logs: orderedLogs,
