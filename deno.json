@@ -1,8 +1,23 @@
 {
+  "compilerOptions": {
+    "allowJs": false,
+    "strict": true
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"],
+      "include": ["ban-untagged-todo"]
+    }
+  },
   "fmt": {
     "options": {
       "useTabs": false,
-      "singleQuote": true
+      "singleQuote": true,
+      "indentWidth": 2,
+      "proseWrap": "always"
     }
+  },
+  "tasks": {
+    "serve": "deno run --allow-env --allow-read --allow-net src/main.ts"
   }
 }
