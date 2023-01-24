@@ -12,6 +12,9 @@ import {
   // } from 'npm:firebase@9.9.2/firestore'; // NOTE: Deno Deployがnpm moduleに対応していない
 } from 'https://cdn.skypack.dev/firebase@9.9.2/firestore';
 import { userDocumentConverter } from '../models/user.ts';
+import startOfDay from 'https://deno.land/x/date_fns@v2.22.1/startOfDay/index.ts';
+import endOfDay from 'https://deno.land/x/date_fns@v2.22.1/endOfDay/index.ts';
+import { validatePostLog } from '../utils/validate_post_log.ts';
 
 const userCol = () =>
   collection(db, 'users').withConverter(userDocumentConverter());
@@ -23,7 +26,7 @@ const logCol = (uid: string) =>
 type UserApi = {
   fetchUser: (uid: string) => Promise<UserDocument>;
   fetchLogs: (uid: string, start: Date, end: Date) => Promise<LogDocument[]>;
-  postLog: (uid: string, type: LogType, date: Date) => Promise<void>;
+  postLog: (uid: string, type: LogType, date: Date) => Promise<LogDocument>;
 };
 
 export const userApi = (): UserApi => ({
@@ -51,5 +54,6 @@ export const userApi = (): UserApi => ({
       createdAt: date,
     };
     await addDoc(logCol(uid), log);
+    return log;
   },
 });

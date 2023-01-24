@@ -18,6 +18,7 @@ import {
   postTaisyaMessage,
   postTodayRecordMessage,
 } from './utils/slack_message.ts';
+import { validatePostLog } from './utils/validate_post_log.ts';
 
 const app = new App({
   signingSecret: SLACK_SIGNING_SECRET,
@@ -54,6 +55,18 @@ app.message(
     const api = userApi();
 
     try {
+      const logs = await api.fetchLogs(
+        uid,
+        startOfDay(now),
+        endOfDay(now),
+      );
+      const validateResult = validatePostLog(type, logs);
+      if (validateResult.isError) {
+        const message = validateResult.errorMessage;
+        await say({ text: message, thread_ts: event.ts } as any);
+        return;
+      }
+
       await api.postLog(uid, type, now);
       const message = postSyussyaMessage();
       await say({ text: message, thread_ts: event.ts } as any);
@@ -75,8 +88,20 @@ app.message(
     const api = userApi();
 
     try {
-      await api.postLog(uid, type, now);
-      const logs = await api.fetchLogs(uid, startOfDay(now), endOfDay(now));
+      const logs = await api.fetchLogs(
+        uid,
+        startOfDay(now),
+        endOfDay(now),
+      );
+      const validateResult = validatePostLog(type, logs);
+      if (validateResult.isError) {
+        const message = validateResult.errorMessage;
+        await say({ text: message, thread_ts: event.ts } as any);
+        return;
+      }
+
+      const log = await api.postLog(uid, type, now);
+      logs.push(log);
       const message = postTaisyaMessage(logs);
       await say({ text: message, thread_ts: event.ts } as any);
     } catch {
@@ -97,6 +122,18 @@ app.message(
     const api = userApi();
 
     try {
+      const logs = await api.fetchLogs(
+        uid,
+        startOfDay(now),
+        endOfDay(now),
+      );
+      const validateResult = validatePostLog(type, logs);
+      if (validateResult.isError) {
+        const message = validateResult.errorMessage;
+        await say({ text: message, thread_ts: event.ts } as any);
+        return;
+      }
+
       await api.postLog(uid, type, now);
       const message = postKyukeiMessage();
       await say({ text: message, thread_ts: event.ts } as any);
@@ -118,6 +155,18 @@ app.message(
     const api = userApi();
 
     try {
+      const logs = await api.fetchLogs(
+        uid,
+        startOfDay(now),
+        endOfDay(now),
+      );
+      const validateResult = validatePostLog(type, logs);
+      if (validateResult.isError) {
+        const message = validateResult.errorMessage;
+        await say({ text: message, thread_ts: event.ts } as any);
+        return;
+      }
+
       await api.postLog(uid, type, now);
       const message = postSaikaiMessage();
       await say({ text: message, thread_ts: event.ts } as any);
