@@ -1,5 +1,5 @@
 import { db } from '../libs/firebase.ts';
-import { LogDocument, logDocumentConverter } from '../models/log.ts';
+import { LogDocument, logDocumentConverter, LogType } from '../models/log.ts';
 import { UserDocument } from '../models/user.ts';
 import {
   collection,
@@ -10,6 +10,7 @@ import {
   where,
 } from 'npm:firebase@9.9.2/firestore';
 import { userDocumentConverter } from '../models/user.ts';
+import { addDoc } from '../../../../../Library/Caches/deno/npm/registry.npmjs.org/@firebase/firestore/3.4.14/dist/index.d.ts';
 
 const userCol = () =>
   collection(db, 'users').withConverter(userDocumentConverter());
@@ -21,6 +22,7 @@ const logCol = (uid: string) =>
 type UserApi = {
   fetchUser: (uid: string) => Promise<UserDocument>;
   fetchLogs: (uid: string, start: Date, end: Date) => Promise<LogDocument[]>;
+  postLog: (uid: string, type: LogType, date: Date) => Promise<void>;
 };
 
 export const userApi = (): UserApi => ({
@@ -41,5 +43,12 @@ export const userApi = (): UserApi => ({
     const docs = snaps.docs;
     const logs = docs.map((doc) => doc.data());
     return logs;
+  },
+  postLog: async (uid, type, date) => {
+    const log: LogDocument = {
+      type: 'syussya',
+      createdAt: date,
+    };
+    await addDoc(logCol(uid), log);
   },
 });
